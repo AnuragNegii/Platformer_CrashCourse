@@ -1,7 +1,8 @@
 using UnityEngine;
 
 public class Player : MonoBehaviour {
-    
+
+    public static Player Instance { get; private set;}
     [SerializeField] private GameInput gameInput;
     [SerializeField] private float walkSpeed = 5f;
 
@@ -10,6 +11,10 @@ public class Player : MonoBehaviour {
     [SerializeField] private bool isMoving;
 
     private void Awake() {
+        if(Instance!= null){
+            Debug.LogError("There is more than one Player");
+        }
+        Instance = this;
         rb= GetComponent<Rigidbody2D>();
     }
 
