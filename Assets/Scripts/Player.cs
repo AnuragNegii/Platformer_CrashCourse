@@ -8,8 +8,16 @@ public class Player : MonoBehaviour {
     private GameInput gameInput;
     private float walkSpeed = 5f;
     private float runSpeed = 10f;
-    private float runOrWalkSpeed;
-
+    private float currentMoveSpeed{
+        get{
+            if(playerAnimator.IsWalking){
+                if(playerAnimator.IsRunning){
+                    return runSpeed;
+                }else{
+                    return walkSpeed;
+                }
+            }return 0;
+        }}
     private Rigidbody2D rb;
     private Vector2 moveInput;
     private Animator animator;
@@ -27,16 +35,11 @@ public class Player : MonoBehaviour {
         gameInput = GameInput.Instance;
     }
     private void Update() {
-        if(playerAnimator.IsWalking && playerAnimator.IsRunning){
-            runOrWalkSpeed = runSpeed;
-        }else{
-            runOrWalkSpeed = walkSpeed;
-        }
         HandleMovement();
     }
 
     private void FixedUpdate(){
-        rb.velocity = new Vector2(moveInput.x * runOrWalkSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(moveInput.x * currentMoveSpeed, rb.velocity.y);
     }
 
     private void HandleMovement(){
