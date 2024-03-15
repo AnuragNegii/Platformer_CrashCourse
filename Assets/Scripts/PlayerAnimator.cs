@@ -3,9 +3,13 @@ using UnityEngine;
 public class PlayerAnimator : MonoBehaviour {
     private Animator animator;
     private GameInput gameInput;
-    public bool isRunning;
-    public bool isWalking;
 
+    private bool isRunning;
+    public bool IsRunning{get{return isRunning;}}
+
+    private bool isWalking;
+    public bool IsWalking{ get {return isWalking;}}
+    
     private void Awake() {
         animator = GetComponent<Animator>();
     }

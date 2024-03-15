@@ -27,7 +27,7 @@ public class Player : MonoBehaviour {
         gameInput = GameInput.Instance;
     }
     private void Update() {
-        if(playerAnimator.isRunning && playerAnimator.isWalking){
+        if(playerAnimator.IsWalking && playerAnimator.IsRunning){
             runOrWalkSpeed = runSpeed;
         }else{
             runOrWalkSpeed = walkSpeed;
