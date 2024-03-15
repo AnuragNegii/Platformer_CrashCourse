@@ -3,12 +3,17 @@ using UnityEngine;
 public class Player : MonoBehaviour {
 
     public static Player Instance { get; private set;}
-    [SerializeField] private GameInput gameInput;
-    [SerializeField] private float walkSpeed = 5f;
+    [SerializeField] private PlayerAnimator playerAnimator;
+
+    private GameInput gameInput;
+    private float walkSpeed = 5f;
+    private float runSpeed = 10f;
+    private float runOrWalkSpeed;
 
     private Rigidbody2D rb;
     private Vector2 moveInput;
-    [SerializeField] private bool isMoving;
+    private Animator animator;
+
 
     private void Awake() {
         if(Instance!= null){
@@ -16,18 +21,25 @@ public class Player : MonoBehaviour {
         }
         Instance = this;
         rb= GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
     }
-
+    private void Start() {
+        gameInput = GameInput.Instance;
+    }
     private void Update() {
+        if(playerAnimator.isRunning && playerAnimator.isWalking){
+            runOrWalkSpeed = runSpeed;
+        }else{
+            runOrWalkSpeed = walkSpeed;
+        }
         HandleMovement();
     }
 
     private void FixedUpdate(){
-        rb.velocity = new Vector2(moveInput.x * walkSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(moveInput.x * runOrWalkSpeed, rb.velocity.y);
     }
 
     private void HandleMovement(){
         moveInput = gameInput.GetMovementVectorNormalized();
-        isMoving = moveInput != Vector2.zero;
     }
 }
