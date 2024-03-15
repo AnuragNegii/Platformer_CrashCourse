@@ -20,8 +20,7 @@ public class Player : MonoBehaviour {
         }}
     private Rigidbody2D rb;
     private Vector2 moveInput;
-    private Animator animator;
-
+    private bool isFacingRight = true;
 
     private void Awake() {
         if(Instance!= null){
@@ -29,13 +28,13 @@ public class Player : MonoBehaviour {
         }
         Instance = this;
         rb= GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
     }
     private void Start() {
         gameInput = GameInput.Instance;
     }
     private void Update() {
         HandleMovement();
+        SetFacingDeirection(moveInput);
     }
 
     private void FixedUpdate(){
@@ -44,5 +43,18 @@ public class Player : MonoBehaviour {
 
     private void HandleMovement(){
         moveInput = gameInput.GetMovementVectorNormalized();
+    }
+
+    private void SetFacingDeirection(Vector2 movInut){
+        if(moveInput.x >0 && !isFacingRight){
+            transform.localScale *= new Vector2(-1, 1);
+            //move to the right
+            isFacingRight = true;
+        }else if(moveInput.x < 0 && isFacingRight){
+            transform.localScale *= new Vector2(-1, 1);
+            //move to the left
+            isFacingRight = false;
+        }
+
     }
 }
