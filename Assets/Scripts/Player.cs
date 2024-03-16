@@ -1,24 +1,32 @@
+using System;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
 
     public static Player Instance { get; private set;}
     [SerializeField] private PlayerAnimator playerAnimator;
-
+    private TouchingDirections touchingDirections;
     private GameInput gameInput;
     private float walkSpeed = 5f;
     private float runSpeed = 10f;
+    private float airWalkSpeed = 3f;
     private float currentMoveSpeed{
         get{
-            if(playerAnimator.IsWalking){
-                if(playerAnimator.IsRunning){
-                    return runSpeed;
+            if(playerAnimator.IsWalking && !touchingDirections.IsOnWall){
+                if(touchingDirections.IsGrounded){
+                    if(playerAnimator.IsRunning){
+                        return runSpeed;
+                    }else{
+                        return walkSpeed;
+                    }
                 }else{
-                    return walkSpeed;
+                    //air walk
+                    return airWalkSpeed;
                 }
+
             }return 0;
         }}
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     private Vector2 moveInput;
     private bool isFacingRight = true;
 
@@ -28,10 +36,21 @@ public class Player : MonoBehaviour {
         }
         Instance = this;
         rb= GetComponent<Rigidbody2D>();
+        touchingDirections = GetComponent<TouchingDirections>();
     }
     private void Start() {
         gameInput = GameInput.Instance;
+        gameInput.OnJumpPerformed += gameInput_OnJumpPerformed;
     }
+
+    private void gameInput_OnJumpPerformed(object sender, EventArgs e)
+    {
+        float jumpImpulse = 10f;
+        if(touchingDirections.IsGrounded){
+            rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
+        }
+    }
+
     private void Update() {
         HandleMovement();
         SetFacingDeirection(moveInput);
