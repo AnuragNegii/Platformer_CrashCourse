@@ -8,13 +8,19 @@ public class PlayerAnimator : MonoBehaviour {
     private const string IS_GROUNDED = "isGrounded";
     private const string Y_VELOCITY = "yVelocity";
     private const string ATTACK_TRIGGER= "attack";
+    private const string CAN_MOVE = "canMove";
 
     [SerializeField] private TouchingDirections touchingDirections;
     private Player player;
     private Animator animator;
     private GameInput gameInput;
 
-
+    
+    public bool canMove{
+        get{    
+            return animator.GetBool(CAN_MOVE);
+        }
+    }
     private bool isRunning;
     public bool IsRunning{get{return isRunning;}}
 

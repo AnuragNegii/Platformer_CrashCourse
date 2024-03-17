@@ -12,20 +12,22 @@ public class Player : MonoBehaviour {
     private float airWalkSpeed = 3f;
     private float currentMoveSpeed{
         get{
-            if(playerAnimator.IsWalking && !touchingDirections.IsOnWall){
-                if(touchingDirections.IsGrounded){
-                    if(playerAnimator.IsRunning){
-                        return runSpeed;
+            if(playerAnimator.canMove){
+                if(playerAnimator.IsWalking && !touchingDirections.IsOnWall){
+                    if(touchingDirections.IsGrounded){
+                        if(playerAnimator.IsRunning){
+                            return runSpeed;
+                        }else{
+                            return walkSpeed;
+                        }
                     }else{
-                        return walkSpeed;
+                        //air walk
+                        return airWalkSpeed;
                     }
-                }else{
-                    //air walk
-                    return airWalkSpeed;
-                }
-
+                }return 0;
             }return 0;
-        }}
+        }
+    }
     public Rigidbody2D rb;
     private Vector2 moveInput;
     private bool isFacingRight = true;
@@ -46,7 +48,7 @@ public class Player : MonoBehaviour {
     private void gameInput_OnJumpPerformed(object sender, EventArgs e)
     {
         float jumpImpulse = 10f;
-        if(touchingDirections.IsGrounded){
+        if(touchingDirections.IsGrounded && playerAnimator.canMove){
             rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
         }
     }
