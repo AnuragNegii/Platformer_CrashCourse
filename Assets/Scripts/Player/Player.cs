@@ -45,14 +45,6 @@ public class Player : MonoBehaviour {
         gameInput.OnJumpPerformed += gameInput_OnJumpPerformed;
     }
 
-    private void gameInput_OnJumpPerformed(object sender, EventArgs e)
-    {
-        float jumpImpulse = 10f;
-        if(touchingDirections.IsGrounded && playerAnimator.canMove){
-            rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
-        }
-    }
-
     private void Update() {
         HandleMovement();
         SetFacingDeirection(moveInput);
@@ -62,6 +54,14 @@ public class Player : MonoBehaviour {
         rb.velocity = new Vector2(moveInput.x * currentMoveSpeed, rb.velocity.y);
     }
 
+    private void gameInput_OnJumpPerformed(object sender, EventArgs e)
+    {
+        float jumpImpulse = 10f;
+        if(touchingDirections.IsGrounded && playerAnimator.canMove){
+            rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
+        }
+    }
+    
     private void HandleMovement(){
         moveInput = gameInput.GetMovementVectorNormalized();
     }
@@ -76,6 +76,5 @@ public class Player : MonoBehaviour {
             //move to the left
             isFacingRight = false;
         }
-
     }
 }
