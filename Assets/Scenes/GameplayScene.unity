@@ -171,11 +171,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 444693125}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1881beb62ef0855398e715bd01bb4fce, type: 3}
+  m_Script: {fileID: 11500000, guid: 87e38c821c29feb9bb84d121f4d0a859, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
-  isAlive: 1
+  maxHealth: 100
 --- !u!1 &468487884
 GameObject:
   m_ObjectHideFlags: 0
@@ -7431,6 +7430,10 @@ PrefabInstance:
       propertyPath: detectionZone
       value: 
       objectReference: {fileID: 793242362}
+    - target: {fileID: 288000156197864321, guid: 330749e295e6a44079c26bc64e0e2289, type: 3}
+      propertyPath: enemyHealthAndDamage
+      value: 
+      objectReference: {fileID: 444693131}
     - target: {fileID: 796600913654589110, guid: 330749e295e6a44079c26bc64e0e2289, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.35
@@ -7487,6 +7490,10 @@ PrefabInstance:
       propertyPath: detectionZone
       value: 
       objectReference: {fileID: 793242362}
+    - target: {fileID: 8961619046436538373, guid: 330749e295e6a44079c26bc64e0e2289, type: 3}
+      propertyPath: enemyHealthAndDamage
+      value: 
+      objectReference: {fileID: 444693131}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -4,7 +4,7 @@ using UnityEngine;
 public class KnightEnemy : MonoBehaviour {
     
     [SerializeField] private DetectionZone detectionZone;
-
+    [SerializeField] private EnemyHealthAndDamage enemyHealthAndDamage;
     private Rigidbody2D rb;
     private TouchingDirections td;
     private Vector2 walkDirection = new Vector2(1, 0);
@@ -20,7 +20,9 @@ public class KnightEnemy : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        EnemyWalk();
+        if(enemyHealthAndDamage.IsAlive()){
+            EnemyWalk();
+        }
     }
 
     private void EnemyWalk()
@@ -37,7 +39,7 @@ public class KnightEnemy : MonoBehaviour {
     }
 
     private void wallCheckDirection(){
-        if(td.IsGrounded && td.IsOnWall){
+        if(td.IsGrounded && td.IsOnWall && enemyHealthAndDamage.IsAlive()){
             transform.localScale *= new Vector2(-1, 1);
             walkDirection *= -1;
         }
