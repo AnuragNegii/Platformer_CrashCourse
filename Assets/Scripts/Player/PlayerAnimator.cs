@@ -9,8 +9,10 @@ public class PlayerAnimator : MonoBehaviour {
     private const string Y_VELOCITY = "yVelocity";
     private const string ATTACK_TRIGGER= "attack";
     private const string CAN_MOVE = "canMove";
+    private const string IS_ALive = "isAlive";
 
     [SerializeField] private TouchingDirections touchingDirections;
+    [SerializeField] private HealthAndDamage playerHealth;
     private Player player;
     private Animator animator;
     private GameInput gameInput;
@@ -54,5 +56,6 @@ public class PlayerAnimator : MonoBehaviour {
         animator.SetBool(IS_WALKING, isWalking);
         animator.SetBool(IS_GROUNDED, touchingDirections.IsGrounded);
         animator.SetFloat(Y_VELOCITY, player.rb.velocity.y);
+        animator.SetBool(IS_ALive, playerHealth.IsAlive());
     }
 }

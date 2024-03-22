@@ -7481,18 +7481,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1913186136414936169, guid: 6b62763a20e3de69dac2f278c23bf6ce, type: 3}
-      propertyPath: contactFilter2D.useLayerMask
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1913186136414936169, guid: 6b62763a20e3de69dac2f278c23bf6ce, type: 3}
-      propertyPath: contactFilter2D.layerMask.m_Bits
-      value: 256
-      objectReference: {fileID: 0}
-    - target: {fileID: 1913186136414936169, guid: 6b62763a20e3de69dac2f278c23bf6ce, type: 3}
-      propertyPath: contactFilter2D.useOutsideNormalAngle
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2029962241699474767, guid: 6b62763a20e3de69dac2f278c23bf6ce, type: 3}
       propertyPath: m_Layer
       value: 6
