@@ -12,7 +12,7 @@ public class PlayerAnimator : MonoBehaviour {
     private const string IS_ALive = "isAlive";
 
     [SerializeField] private TouchingDirections touchingDirections;
-    [SerializeField] private HealthAndDamage playerHealth;
+    [SerializeField] private PlayerHealthAndDamage playerHealth;
     private Player player;
     private Animator animator;
     private GameInput gameInput;

@@ -6,7 +6,7 @@ public class Player : MonoBehaviour {
     public static Player Instance { get; private set;}
     [SerializeField] private PlayerAnimator playerAnimator;
     private TouchingDirections touchingDirections;
-    private HealthAndDamage healthAndDamage;
+    private PlayerHealthAndDamage healthAndDamage;
     private GameInput gameInput;
     private float walkSpeed = 5f;
     private float runSpeed = 10f;
@@ -40,7 +40,7 @@ public class Player : MonoBehaviour {
         Instance = this;
         rb= GetComponent<Rigidbody2D>();
         touchingDirections = GetComponent<TouchingDirections>();
-        healthAndDamage = GetComponent<HealthAndDamage>();
+        healthAndDamage = GetComponent<PlayerHealthAndDamage>();
     }
     private void Start() {
         gameInput = GameInput.Instance;
