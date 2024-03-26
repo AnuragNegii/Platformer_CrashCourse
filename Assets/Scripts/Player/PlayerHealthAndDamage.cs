@@ -3,8 +3,9 @@ using UnityEngine;
 public class PlayerHealthAndDamage : MonoBehaviour, IDamageable {
 
     [SerializeField] private int maxHealth = 100;
-    private int currentHealth;
-    [SerializeField]private bool isAlive = true;
+    [SerializeField] private bool isAlive = true;
+
+    [SerializeField] private int currentHealth;
     private float invulnerabilityTime = 0.5f;
     private float timeSinsceLastGotHit = 0f;
     private bool canGetHit = true;
@@ -19,15 +20,17 @@ public class PlayerHealthAndDamage : MonoBehaviour, IDamageable {
             canGetHit = true;
         }
         if(IsAlive() && canGetHit){
-            IsHit(10);
             timeSinsceLastGotHit = 0;
             canGetHit = false;
-            Debug.Log(currentHealth);
         }
     }
+
     public int IsHit(int damage)
     {
-        currentHealth = currentHealth - damage;
+        if(isAlive){
+            currentHealth = currentHealth - damage;
+            return currentHealth;
+        }
         return currentHealth;
     }
 

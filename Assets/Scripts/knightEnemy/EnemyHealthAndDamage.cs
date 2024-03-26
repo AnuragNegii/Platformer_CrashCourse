@@ -12,6 +12,7 @@ public class EnemyHealthAndDamage : MonoBehaviour, IDamageable
     private void Start() {
         currentHealth = maxHealth;
     }
+
     private void Update(){
         timeSinsceLastGotHit += Time.deltaTime;
         if(timeSinsceLastGotHit > invulnerabilityTime){
@@ -19,9 +20,7 @@ public class EnemyHealthAndDamage : MonoBehaviour, IDamageable
         }
         if(IsAlive() && canGetHit){
             canGetHit = false;
-            IsHit(10);
             timeSinsceLastGotHit = 0;
-            Debug.Log(currentHealth);
         }
     }
     public bool IsAlive()
