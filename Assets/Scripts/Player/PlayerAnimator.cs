@@ -9,18 +9,19 @@ public class PlayerAnimator : MonoBehaviour {
     private const string Y_VELOCITY = "yVelocity";
     private const string ATTACK_TRIGGER= "attack";
     private const string CAN_MOVE = "canMove";
-    private const string IS_ALive = "isAlive";
+    private const string IS_ALIVE = "isAlive";
+    private const string IS_HIT = "isHit";
 
     [SerializeField] private TouchingDirections touchingDirections;
-    [SerializeField] private PlayerHealthAndDamage playerHealth;
+    [SerializeField] private PlayerHealthAndDamage playerHealthAndDamage;
     private Player player;
     private Animator animator;
     private GameInput gameInput;
 
-    
-    public bool canMove{
+    private bool canMove = true;
+    public bool CanMove{
         get{    
-            return animator.GetBool(CAN_MOVE);
+            return canMove;
         }
     }
     private bool isRunning;
@@ -47,6 +48,14 @@ public class PlayerAnimator : MonoBehaviour {
         HandleAnimation();
     }
 
+
+    public void SetCanMoveAnimationEventTrue(){
+        canMove = true;
+    }
+    
+    public void SetCanMoveAnimationEventFalse(){
+        canMove = false;
+    }
     private void HandleAnimation(){
         Vector2 moveInput = gameInput.GetMovementVectorNormalized();
         isRunning = gameInput.IsRunning();
@@ -56,6 +65,8 @@ public class PlayerAnimator : MonoBehaviour {
         animator.SetBool(IS_WALKING, isWalking);
         animator.SetBool(IS_GROUNDED, touchingDirections.IsGrounded);
         animator.SetFloat(Y_VELOCITY, player.rb.velocity.y);
-        animator.SetBool(IS_ALive, playerHealth.IsAlive());
+        animator.SetBool(IS_ALIVE, playerHealthAndDamage.IsAlive());
+        animator.SetBool(IS_HIT, playerHealthAndDamage.isHit);
+        animator.SetBool(CAN_MOVE, canMove);
     }
 }

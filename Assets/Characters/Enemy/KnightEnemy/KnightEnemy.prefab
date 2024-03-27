@@ -392,6 +392,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3843554251514989089, guid: 7708d027ce67065efbad2c0eced20d3b, type: 3}
+      propertyPath: knightEnemy
+      value: 
+      objectReference: {fileID: 288000156197864321}
+    - target: {fileID: 3843554251514989089, guid: 7708d027ce67065efbad2c0eced20d3b, type: 3}
       propertyPath: detectionZone
       value: 
       objectReference: {fileID: 1382402463095999863}

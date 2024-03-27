@@ -25,7 +25,7 @@ public class SetBooleanBehaviour : StateMachineBehaviour
     // override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     // {
     //    if(updateOnState){
-    //     animator.SetBool(CAN_MOVE, valueOnEnter);
+    //     animator.SetBool(CAN_MOVE, valueOnExit);
     //    }
     // }
 

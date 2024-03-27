@@ -152,6 +152,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  isAlive: 1
+  currentHealth: 100
+  isHit: 0
 --- !u!1001 &4866771195085813376
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -6,14 +6,14 @@ public class Player : MonoBehaviour {
     public static Player Instance { get; private set;}
     [SerializeField] private PlayerAnimator playerAnimator;
     private TouchingDirections touchingDirections;
-    private PlayerHealthAndDamage healthAndDamage;
+    private PlayerHealthAndDamage playerHealthAndDamage;
     private GameInput gameInput;
     private float walkSpeed = 5f;
     private float runSpeed = 10f;
     private float airWalkSpeed = 3f;
     private float currentMoveSpeed{ /// this sets the movement speed for player and the checks for the player if it is alive or not
         get{
-            if(playerAnimator.canMove && healthAndDamage.IsAlive()){
+            if(playerAnimator.CanMove && playerHealthAndDamage.IsAlive()){
                 if(playerAnimator.IsWalking && !touchingDirections.IsOnWall){
                     if(touchingDirections.IsGrounded){
                         if(playerAnimator.IsRunning){
@@ -40,11 +40,17 @@ public class Player : MonoBehaviour {
         Instance = this;
         rb= GetComponent<Rigidbody2D>();
         touchingDirections = GetComponent<TouchingDirections>();
-        healthAndDamage = GetComponent<PlayerHealthAndDamage>();
+        playerHealthAndDamage = GetComponent<PlayerHealthAndDamage>();
     }
     private void Start() {
         gameInput = GameInput.Instance;
         gameInput.OnJumpPerformed += gameInput_OnJumpPerformed;
+        playerHealthAndDamage.knockBackEvent += PlayerHealthAndDamage_KnockBackEvent;
+    }
+
+    private void PlayerHealthAndDamage_KnockBackEvent(object sender, PlayerHealthAndDamage.ONknockBackEventArgs e)
+    {
+        rb.velocity = new Vector2(e.knockBack.x, e.knockBack.y);
     }
 
     private void Update() {
@@ -53,14 +59,15 @@ public class Player : MonoBehaviour {
     }
 
     private void FixedUpdate(){
-        rb.velocity = new Vector2(moveInput.x * currentMoveSpeed, rb.velocity.y);
+        if(!playerHealthAndDamage.isHit)
+            rb.velocity = new Vector2(moveInput.x * currentMoveSpeed, rb.velocity.y);
     }
 
     private void gameInput_OnJumpPerformed(object sender, EventArgs e)
     {
         float jumpImpulse = 10f;
-        if(touchingDirections.IsGrounded && playerAnimator.canMove && healthAndDamage.IsAlive()){
-            rb.velocity = new Vector2(rb.velocity.x, jumpImpulse);
+        if(touchingDirections.IsGrounded && playerAnimator.CanMove && playerHealthAndDamage.IsAlive()){
+            rb.velocity += new Vector2(rb.velocity.x, jumpImpulse);
         }
     }
     
@@ -69,11 +76,11 @@ public class Player : MonoBehaviour {
     }
 
     private void SetFacingDeirection(Vector2 movInut){
-        if(moveInput.x >0 && !isFacingRight && healthAndDamage.IsAlive()){
+        if(moveInput.x >0 && !isFacingRight && playerHealthAndDamage.IsAlive()){
             transform.localScale *= new Vector2(-1, 1);
             //move to the right
             isFacingRight = true;
-        }else if(moveInput.x < 0 && isFacingRight && healthAndDamage.IsAlive()){
+        }else if(moveInput.x < 0 && isFacingRight && playerHealthAndDamage.IsAlive()){
             transform.localScale *= new Vector2(-1, 1);
             //move to the left
             isFacingRight = false;

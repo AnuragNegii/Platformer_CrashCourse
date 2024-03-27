@@ -1,7 +1,15 @@
+using System;
 using UnityEngine;
 
 public class EnemyHealthAndDamage : MonoBehaviour, IDamageable
 {
+    public event EventHandler<KnockBackOnIsHitEventArgs> knockBackEvent;
+    public class KnockBackOnIsHitEventArgs : EventArgs
+    {
+        public Vector2 knockBack;
+    }
+    public bool isHit = false;
+
     [SerializeField] private int maxHealth;
     private int currentHealth;
     private bool isAlive = true;
@@ -21,6 +29,7 @@ public class EnemyHealthAndDamage : MonoBehaviour, IDamageable
         if(IsAlive() && canGetHit){
             canGetHit = false;
             timeSinsceLastGotHit = 0;
+            isHit = false;
         }
     }
     public bool IsAlive()
@@ -31,9 +40,17 @@ public class EnemyHealthAndDamage : MonoBehaviour, IDamageable
         return isAlive;
     }
 
-    public int IsHit(int damage)
+    public int IsHit(int damage, Vector2 knockBack)
     {
-        currentHealth = currentHealth - damage;
+        if(isAlive){
+            currentHealth = currentHealth - damage;
+            isHit = true;
+            knockBackEvent?.Invoke(this, new KnockBackOnIsHitEventArgs{
+                knockBack = knockBack
+            });
+            return currentHealth;
+        }
         return currentHealth;
     }
 }
+

@@ -14,13 +14,22 @@ public class KnightEnemy : MonoBehaviour {
         td = GetComponent<TouchingDirections>();
     }
 
+    private void Start() {
+        enemyHealthAndDamage.knockBackEvent += EnemyHealthAndDamage_KnockBackEvent;
+    }
+
+    private void EnemyHealthAndDamage_KnockBackEvent(object sender, EnemyHealthAndDamage.KnockBackOnIsHitEventArgs e)
+    {
+       rb.velocity = new Vector2(e.knockBack.x, e.knockBack.y);
+    }
+
     private void Update(){
         wallCheckDirection();
     }
 
     private void FixedUpdate()
     {
-        if(enemyHealthAndDamage.IsAlive()){
+        if(enemyHealthAndDamage.IsAlive() && !enemyHealthAndDamage.isHit){
             EnemyWalk();
         }
     }
